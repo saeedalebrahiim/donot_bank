@@ -1,3 +1,4 @@
+import 'package:donot_bank/controller/auth/auth_controller.dart';
 import 'package:donot_bank/view/components/forms/input.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class OtpConfrimation extends StatefulWidget {
 }
 
 class _OtpConfrimationState extends State<OtpConfrimation> {
+  var otpctr = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,11 +57,13 @@ class _OtpConfrimationState extends State<OtpConfrimation> {
                 ),
                 MyInput(
                   label: "OTP",
-                  controller: TextEditingController(),
+                  controller:otpctr,
                   validator: (value) {},
                 ),
                 RawMaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AuthController.otpconf(otpctr.text, context);
+                  },
                   child: Text("Submit"),
                   fillColor: Colors.white,
                 )

@@ -1,4 +1,5 @@
 import 'package:donot_bank/view/pages/auth/login.dart';
+import 'package:donot_bank/view/pages/index/index.dart';
 import 'package:flutter/material.dart';
 
 class InitScreen extends StatefulWidget {
