@@ -1,5 +1,6 @@
 import 'package:donot_bank/view/pages/auth/login.dart';
 import 'package:donot_bank/view/pages/index/index.dart';
+import 'package:donot_bank/view/pages/transtaction/transaction.dart';
 import 'package:flutter/material.dart';
 
 class InitScreen extends StatefulWidget {
@@ -12,6 +13,6 @@ class InitScreen extends StatefulWidget {
 class _InitScreenState extends State<InitScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Login();
+    return const TransAction();
   }
 }

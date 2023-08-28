@@ -45,7 +45,8 @@ class _LoginState extends State<Login> {
                       .headlineLarge!
                       .copyWith(color: Colors.white),
                 ),
-                Form(autovalidateMode: AutovalidateMode.always,
+                Form(
+                  autovalidateMode: AutovalidateMode.always,
                   key: formkey,
                   child: MyInput(
                     label: "Phone Number",

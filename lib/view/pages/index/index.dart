@@ -101,6 +101,11 @@ class Index extends StatelessWidget {
                         height: 150,
                         width: 120,
                         decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            opacity: 0.3,
+                            image: AssetImage("lib/assets/favicon.png"),
+                          ),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(25),
                             topRight: Radius.circular(25),
