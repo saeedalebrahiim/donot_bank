@@ -13,6 +13,6 @@ class InitScreen extends StatefulWidget {
 class _InitScreenState extends State<InitScreen> {
   @override
   Widget build(BuildContext context) {
-    return const TransAction();
+    return const Index();
   }
 }
