@@ -1,5 +1,6 @@
 import 'package:donot_bank/controller/initializer.dart';
 import 'package:donot_bank/controller/provider/card_state.dart';
+import 'package:donot_bank/controller/provider/transaction_state.dart';
 import 'package:donot_bank/init_screen.dart';
 import 'package:donot_bank/model/db/objects/cards.dart';
 import 'package:donot_bank/model/db/objects/shops.dart';
@@ -18,9 +19,10 @@ void main() async {
   Hive.registerAdapter(CardsObjectAdapter());
 
   initlize();
-  runApp(MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => CardState())],
-      child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => CardState()),
+    ChangeNotifierProvider(create: (_) => TranactionState()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

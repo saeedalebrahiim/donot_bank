@@ -1,6 +1,8 @@
 import 'package:donot_bank/controller/provider/card_state.dart';
+import 'package:donot_bank/controller/provider/transaction_state.dart';
 import 'package:donot_bank/model/db/boxes/boxes.dart';
 import 'package:donot_bank/model/db/objects/users.dart';
+import 'package:donot_bank/view/pages/transtaction/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_listener/hive_listener.dart';
@@ -23,6 +25,7 @@ class _IndexState extends State<Index> {
 
   getBox() async {
     context.read<CardState>().getCard();
+    context.read<TranactionState>().getTransactions();
 
     Boxes.userBox = await Hive.openBox("userBox");
     setState(() {});
@@ -34,7 +37,10 @@ class _IndexState extends State<Index> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () async {
-            context.read<CardState>().getCard();
+            // context.read<CardState>().getCard();
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => TransAction()),
+            );
           },
           icon: Icon(
             Icons.add_circle,
@@ -208,78 +214,87 @@ class _IndexState extends State<Index> {
                     ),
                   ],
                 ),
-                ListView.builder(
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Container(
-                        width: 450,
-                        height: 90,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 1,
-                            style: BorderStyle.solid,
+                Consumer<TranactionState>(
+                  builder: (context, value, child) => ListView.builder(
+                    itemCount: TranactionState.tranactions.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Container(
+                          width: 450,
+                          height: 90,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 130,
+                                    height: 110,
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: Colors.black),
+                                    child: Image.network(TranactionState
+                                        .tranactions[index].shopImage),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        TranactionState
+                                            .tranactions[index].shopName,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        TranactionState
+                                            .tranactions[index].dateTime,
+                                        style: TextStyle(
+                                            color: Colors.grey.shade500,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                (TranactionState.tranactions[index].isDeposite
+                                        ? "+"
+                                        : "-") +
+                                    TranactionState.tranactions[index].amount,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 130,
-                                  height: 110,
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      color: Colors.black),
-                                  child: FlutterLogo(),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Shop folan",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "Aug 06 2020",
-                                      style: TextStyle(
-                                          color: Colors.grey.shade500,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Text(
-                              "-\$14.0",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                )
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

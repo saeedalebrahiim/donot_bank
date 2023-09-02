@@ -6,17 +6,17 @@ part of 'shops.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class shopObjectAdapter extends TypeAdapter<shopObject> {
+class shopObjectAdapter extends TypeAdapter<ShopObject> {
   @override
   final int typeId = 4;
 
   @override
-  shopObject read(BinaryReader reader) {
+  ShopObject read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return shopObject(
+    return ShopObject(
       name: fields[0] as String,
       imageUrl: fields[1] as String,
       id: fields[3] as String,
@@ -24,7 +24,7 @@ class shopObjectAdapter extends TypeAdapter<shopObject> {
   }
 
   @override
-  void write(BinaryWriter writer, shopObject obj) {
+  void write(BinaryWriter writer, ShopObject obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)

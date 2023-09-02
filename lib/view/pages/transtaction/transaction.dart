@@ -1,4 +1,11 @@
+import 'package:donot_bank/model/db/boxes/boxes.dart';
+import 'package:donot_bank/model/db/objects/cards.dart';
+import 'package:donot_bank/model/db/objects/transaction.dart';
+import 'package:donot_bank/view/pages/index/index.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
+import 'package:wheel_chooser/wheel_chooser.dart';
 
 class TransAction extends StatefulWidget {
   const TransAction({super.key});
@@ -11,6 +18,8 @@ class _TransActionState extends State<TransAction> {
   TextEditingController numctr = TextEditingController();
   double dx = 0;
   int? dropvalue;
+  bool radiovalue = true;
+  String lorem = "HEH";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +40,8 @@ class _TransActionState extends State<TransAction> {
             children: [
               SizedBox(
                 width: 450,
-                height: 100,
-                child: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
+                height: 50,
+                child: WheelChooser.custom(
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -55,40 +63,90 @@ class _TransActionState extends State<TransAction> {
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
                   ],
-                  scrollDirection: Axis.horizontal,
+                  onValueChanged: (s) {
+                    switch (s) {
+                      case 1:
+                        setState(() {
+                          lorem = "Nike";
+                        });
+                      case 2:
+                        setState(() {
+                          lorem = "addidassss";
+                        });
+                      case 3:
+                        setState(() {
+                          lorem = "puuuuuma";
+                        });
+                      default:
+                        setState(() {
+                          lorem = "HEH";
+                        });
+                    }
+                  },
+                  horizontal: true,
                 ),
               ),
+              // SizedBox(
+              //   width: 450,
+              //   height: 100,
+              //   child: ListView(
+              //     padding: EdgeInsets.symmetric(horizontal: 25),
+              //     children: [
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CircleAvatar(),
+              //       ),
+              //     ],
+              //     scrollDirection: Axis.horizontal,
+              //   ),
+              // ),
               Text(
-                "lorem ipsdfsdf",
+                lorem,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SizedBox(
@@ -123,6 +181,27 @@ class _TransActionState extends State<TransAction> {
                       setState(() {});
                     }),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              RadioListTile(
+                  title: Text("Deposite"),
+                  value: true,
+                  groupValue: radiovalue,
+                  onChanged: (newval) {
+                    setState(() {
+                      radiovalue = newval!;
+                    });
+                  }),
+              RadioListTile(
+                  title: Text("Withdraws"),
+                  value: false,
+                  groupValue: radiovalue,
+                  onChanged: (newval) {
+                    setState(() {
+                      radiovalue = newval!;
+                    });
+                  }),
               SizedBox(
                 height: 20,
               ),
@@ -191,10 +270,68 @@ class _TransActionState extends State<TransAction> {
                     bottom: 0,
                     left: dx,
                     child: GestureDetector(
-                      onHorizontalDragEnd: (details) {
-                        setState(() {
-                          dx = 0;
-                        });
+                      onHorizontalDragEnd: (details) async {
+                        Boxes.transactionBox =
+                            await Hive.openBox("transactionBox");
+                        Boxes.shopBox = await Hive.openBox("shopBox");
+                        Boxes.cardBox = await Hive.openBox("cardBox");
+
+                        if (dx >= 250) {
+                          var oldData = Boxes.cardBox.values.last;
+                          var index = Boxes.cardBox.length - 1;
+                          var oldvalue =
+                              int.parse(Boxes.cardBox.values.last.balance);
+                          var newamount = radiovalue
+                              ? oldvalue + int.parse(numctr.text)
+                              : oldvalue - int.parse(numctr.text);
+                          Boxes.cardBox.putAt(
+                              index,
+                              CardsObject(
+                                  balance: newamount.toString(),
+                                  exDate: oldData.exDate,
+                                  cardNumber: oldData.cardNumber,
+                                  id: oldData.id,
+                                  userId: oldData.userId));
+                          print(Boxes.cardBox.length);
+                          print(Boxes.cardBox.values.last.balance);
+                          Boxes.transactionBox.add(TransactionObject(
+                            id: Uuid().v1(),
+                            amount: numctr.text + "\$",
+                            dateTime: DateTime.now().toString(),
+                            isDeposite: radiovalue,
+                            shopId: Boxes.shopBox.values.first.id,
+                            cardId: Boxes.cardBox.values.last.id,
+                          ));
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => Index(),
+                                            ),
+                                            (route) => false);
+                                      },
+                                      child: Text("Done"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Continue"),
+                                    )
+                                  ],
+                                );
+                              });
+                        } else {
+                          setState(() {
+                            dx = 0;
+                          });
+                        }
                       },
                       onHorizontalDragUpdate: (details) {
                         print(details.localPosition.dx);

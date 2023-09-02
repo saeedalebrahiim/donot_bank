@@ -1,5 +1,7 @@
 import 'package:donot_bank/model/db/boxes/boxes.dart';
 import 'package:donot_bank/model/db/objects/cards.dart';
+import 'package:donot_bank/model/db/objects/shops.dart';
+import 'package:donot_bank/model/db/objects/transaction.dart';
 import 'package:donot_bank/model/db/objects/users.dart';
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
@@ -24,5 +26,32 @@ initlize() async {
         cardNumber: "565647473838",
         id: Uuid().v1(),
         userId: userBox.values.first.id));
+  }
+  Boxes.shopBox = await Hive.openBox("shopBox");
+  if (Boxes.shopBox.isEmpty) {
+    Boxes.shopBox.add(ShopObject(
+      id: Uuid().v1(),
+      name: "Flutter",
+      imageUrl: "lib/assets/favicon.png",
+    ));
+  }
+  Boxes.transactionBox = await Hive.openBox("transactionBox");
+  if (Boxes.transactionBox.isEmpty) {
+    Boxes.transactionBox.add(TransactionObject(
+      id: Uuid().v1(),
+      amount: "20\$",
+      dateTime: DateTime.now().toString(),
+      isDeposite: false,
+      shopId: Boxes.shopBox.values.first.id,
+      cardId: Boxes.cardBox.values.last.id,
+    ));
+    Boxes.transactionBox.add(TransactionObject(
+      id: Uuid().v1(),
+      amount: "30\$",
+      dateTime: DateTime.now().toString(),
+      isDeposite: true,
+      shopId: Boxes.shopBox.values.first.id,
+      cardId: Boxes.cardBox.values.last.id,
+    ));
   }
 }
