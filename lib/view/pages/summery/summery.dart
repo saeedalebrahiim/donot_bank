@@ -1,20 +1,17 @@
 import 'package:donot_bank/controller/provider/card_state.dart';
 import 'package:donot_bank/controller/provider/transaction_state.dart';
-import 'package:donot_bank/model/db/boxes/boxes.dart';
-import 'package:donot_bank/view/pages/summery/summery.dart';
-import 'package:donot_bank/view/pages/transtaction/transaction.dart';
+import 'package:donot_bank/view/pages/summery/chart.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_listener/hive_listener.dart';
 import 'package:provider/provider.dart';
 
-class Index extends StatefulWidget {
-  const Index({super.key});
+class Summery extends StatefulWidget {
+  const Summery({super.key});
 
   @override
-  State<Index> createState() => _IndexState();
+  State<Summery> createState() => _SummeryState();
 }
 
-class _IndexState extends State<Index> {
+class _SummeryState extends State<Summery> {
   @override
   void initState() {
     super.initState();
@@ -22,64 +19,19 @@ class _IndexState extends State<Index> {
   }
 
   getBox() async {
-    context.read<CardState>().getCard();
     context.read<TranactionState>().getTransactions();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () async {
-            // context.read<CardState>().getCard();
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const TransAction()),
-            );
-          },
-          icon: const Icon(
-            Icons.add_circle,
-            size: 28,
-          ),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: CircleAvatar(),
-          ),
-        ],
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    // HiveListener<dynamic>(
-                    //   box: Boxes.userBox,
-                    //   builder: (box) {
-                    //     return Text(
-                    //       box.values.first.userName,
-                    //       style: Theme.of(context).textTheme.headlineLarge,
-                    //     );
-                    //   },
-                    // ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Welcome to donot bank",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 Consumer<CardState>(
                   builder: (context, value, child) => Hero(
                     tag: "magic",
@@ -196,6 +148,8 @@ class _IndexState extends State<Index> {
                 const SizedBox(
                   height: 35,
                 ),
+                SizedBox(width: 450, height: 400, child: BarChartSample6()),
+                Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -204,22 +158,7 @@ class _IndexState extends State<Index> {
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     RawMaterialButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) {
-                              return Summery();
-                            },
-                            transitionDuration: Duration(seconds: 1),
-                            reverseTransitionDuration: Duration(seconds: 1),
-                            transitionsBuilder: (context, animation,
-                                    secondaryAnimation, child) =>
-                                FadeTransition(
-                                    opacity: animation, child: child),
-                          ),
-                        );
-                      },
+                      onPressed: () {},
                       child: Text(
                         "More",
                         style: Theme.of(context).textTheme.titleSmall,

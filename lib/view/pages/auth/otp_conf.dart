@@ -18,7 +18,7 @@ class _OtpConfrimationState extends State<OtpConfrimation> {
       body: Container(
         width: MediaQuery.sizeOf(context).width,
         height: MediaQuery.sizeOf(context).height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xff673ab7),
@@ -58,14 +58,16 @@ class _OtpConfrimationState extends State<OtpConfrimation> {
                 MyInput(
                   label: "OTP",
                   controller:otpctr,
-                  validator: (value) {},
+                  validator: (value) {
+                    return null;
+                  },
                 ),
                 RawMaterialButton(
                   onPressed: () {
                     AuthController.otpconf(otpctr.text, context);
                   },
-                  child: Text("Submit"),
                   fillColor: Colors.white,
+                  child: const Text("Submit"),
                 )
               ],
             ),

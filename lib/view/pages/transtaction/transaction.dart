@@ -26,10 +26,10 @@ class _TransActionState extends State<TransAction> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {},
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Submit Money",
           style: TextStyle(fontSize: 16),
         ),
@@ -42,28 +42,6 @@ class _TransActionState extends State<TransAction> {
                 width: 450,
                 height: 50,
                 child: WheelChooser.custom(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(),
-                    ),
-                  ],
                   onValueChanged: (s) {
                     switch (s) {
                       case 1:
@@ -85,6 +63,28 @@ class _TransActionState extends State<TransAction> {
                     }
                   },
                   horizontal: true,
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircleAvatar(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircleAvatar(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircleAvatar(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircleAvatar(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircleAvatar(),
+                    ),
+                  ],
                 ),
               ),
               // SizedBox(
@@ -147,9 +147,10 @@ class _TransActionState extends State<TransAction> {
               // ),
               Text(
                 lorem,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -159,20 +160,20 @@ class _TransActionState extends State<TransAction> {
                     color: Colors.amber,
                     borderRadius: BorderRadius.circular(35)),
                 child: DropdownButton(
-                    hint: Text("Please Choose Card"),
-                    items: [
-                      DropdownMenuItem(child: Text("data"), value: 1),
+                    hint: const Text("Please Choose Card"),
+                    items: const [
+                      DropdownMenuItem(value: 1, child: Text("data")),
                       DropdownMenuItem(
-                        child: Text("sfsf"),
                         value: 2,
+                        child: Text("sfsf"),
                       ),
                       DropdownMenuItem(
-                        child: Text("fasf"),
                         value: 3,
+                        child: Text("fasf"),
                       ),
                       DropdownMenuItem(
-                        child: Text("gdfgd"),
                         value: 4,
+                        child: Text("gdfgd"),
                       ),
                     ],
                     value: dropvalue,
@@ -181,11 +182,11 @@ class _TransActionState extends State<TransAction> {
                       setState(() {});
                     }),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               RadioListTile(
-                  title: Text("Deposite"),
+                  title: const Text("Deposite"),
                   value: true,
                   groupValue: radiovalue,
                   onChanged: (newval) {
@@ -194,7 +195,7 @@ class _TransActionState extends State<TransAction> {
                     });
                   }),
               RadioListTile(
-                  title: Text("Withdraws"),
+                  title: const Text("Withdraws"),
                   value: false,
                   groupValue: radiovalue,
                   onChanged: (newval) {
@@ -202,7 +203,7 @@ class _TransActionState extends State<TransAction> {
                       radiovalue = newval!;
                     });
                   }),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               SizedBox(
@@ -211,16 +212,16 @@ class _TransActionState extends State<TransAction> {
                   controller: numctr,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
                 width: 450,
                 height: 300,
-                decoration: BoxDecoration(color: Colors.black),
+                decoration: const BoxDecoration(color: Colors.black),
                 child: GridView.builder(
                   itemCount: 12,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, childAspectRatio: 1.9),
                   itemBuilder: (context, index) {
                     return RawMaterialButton(
@@ -239,7 +240,7 @@ class _TransActionState extends State<TransAction> {
                         }
                       },
                       child: index == 11
-                          ? Icon(
+                          ? const Icon(
                               Icons.backspace,
                               color: Colors.white,
                             )
@@ -249,8 +250,8 @@ class _TransActionState extends State<TransAction> {
                                   : index == 10
                                       ? "0"
                                       : ((index) + 1).toString(),
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 30),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 30),
                             ),
                     );
                   },
@@ -292,11 +293,9 @@ class _TransActionState extends State<TransAction> {
                                   cardNumber: oldData.cardNumber,
                                   id: oldData.id,
                                   userId: oldData.userId));
-                          print(Boxes.cardBox.length);
-                          print(Boxes.cardBox.values.last.balance);
                           Boxes.transactionBox.add(TransactionObject(
-                            id: Uuid().v1(),
-                            amount: numctr.text + "\$",
+                            id: const Uuid().v1(),
+                            amount: "${numctr.text}\$",
                             dateTime: DateTime.now().toString(),
                             isDeposite: radiovalue,
                             shopId: Boxes.shopBox.values.first.id,
@@ -312,17 +311,18 @@ class _TransActionState extends State<TransAction> {
                                         Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => Index(),
+                                              builder: (context) =>
+                                                  const Index(),
                                             ),
                                             (route) => false);
                                       },
-                                      child: Text("Done"),
+                                      child: const Text("Done"),
                                     ),
                                     TextButton(
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      child: Text("Continue"),
+                                      child: const Text("Continue"),
                                     )
                                   ],
                                 );
@@ -334,7 +334,7 @@ class _TransActionState extends State<TransAction> {
                         }
                       },
                       onHorizontalDragUpdate: (details) {
-                        print(details.localPosition.dx);
+                        // print(details.localPosition.dx);
                         if (details.localPosition.dx > dx) {
                           setState(() {
                             dx = details.localPosition.dx;
@@ -345,7 +345,7 @@ class _TransActionState extends State<TransAction> {
                       child: RawMaterialButton(
                         fillColor: Colors.white,
                         onPressed: () {},
-                        child: Text("data"),
+                        child: const Text("data"),
                       ),
                     ),
                   ),

@@ -9,7 +9,7 @@ class CardState extends ChangeNotifier {
   getCard() async {
     Boxes.userBox = await Hive.openBox("userBox");
     Boxes.cardBox = await Hive.openBox("cardBox");
-    String userId = Boxes.userBox.values.first.id;
+    // String userId = Boxes.userBox.values.first.id;
     CardsObject theFirst = Boxes.cardBox.values.last;
     CardsDto dto = CardsDto(
         balance: theFirst.balance,

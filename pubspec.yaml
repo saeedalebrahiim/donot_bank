@@ -45,6 +45,7 @@ dependencies:
   hive_listener: ^1.2.1
   provider: ^6.0.5
   wheel_chooser: ^1.1.2
+  fl_chart: ^0.63.0
 
 dev_dependencies:
   flutter_test:

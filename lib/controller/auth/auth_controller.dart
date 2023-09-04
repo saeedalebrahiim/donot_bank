@@ -1,5 +1,4 @@
 import 'package:donot_bank/model/auth/auth_model.dart';
-import 'package:donot_bank/view/pages/auth/login.dart';
 import 'package:donot_bank/view/pages/auth/otp_conf.dart';
 import 'package:donot_bank/view/pages/index/index.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class AuthController {
       if (value == true) {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => Index(),
+            builder: (context) => const Index(),
           ),
         );
       } else {

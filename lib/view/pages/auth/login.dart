@@ -1,6 +1,5 @@
 import 'package:donot_bank/controller/auth/auth_controller.dart';
 import 'package:donot_bank/view/components/forms/input.dart';
-import 'package:donot_bank/view/pages/auth/otp_conf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,7 +19,7 @@ class _LoginState extends State<Login> {
       body: Container(
         width: MediaQuery.sizeOf(context).width,
         height: MediaQuery.sizeOf(context).height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xff673ab7),
@@ -65,6 +64,7 @@ class _LoginState extends State<Login> {
                       if (value.length > 11 || value.length < 11) {
                         return "11 ta bashe";
                       }
+                      return null;
                     },
                   ),
                 ),
@@ -74,8 +74,8 @@ class _LoginState extends State<Login> {
                       AuthController.login(controller.text, context);
                     }
                   },
-                  child: Text("Send OTP"),
                   fillColor: Colors.white,
+                  child: const Text("Send OTP"),
                 )
               ],
             ),
